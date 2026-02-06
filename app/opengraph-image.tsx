@@ -9,8 +9,8 @@ export default function Image() {
     (
       <div
         style={{
-          background: "#0a0a0a",
-          color: "#fafafa",
+          background: "#ffffff",
+          color: "#171717",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -25,7 +25,7 @@ export default function Image() {
           style={{
             marginTop: 16,
             fontSize: 28,
-            color: "#a1a1aa",
+            color: "#52525b",
           }}
         >
           Senior Frontend Engineer — React · TypeScript · AI

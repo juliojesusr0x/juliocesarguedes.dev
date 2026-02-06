@@ -37,7 +37,7 @@ export function SocialIcons() {
     <div className="flex items-center justify-center gap-6" role="list">
       <a
         href={`mailto:${site.email}`}
-        className="text-zinc-400 hover:text-zinc-100 transition-colors"
+        className="text-zinc-700 hover:text-zinc-950 transition-colors"
         aria-label="Email"
         title="Email"
       >
@@ -61,7 +61,7 @@ export function SocialIcons() {
         href={site.social.linkedin}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-zinc-400 hover:text-zinc-100 transition-colors"
+        className="text-zinc-700 hover:text-zinc-950 transition-colors"
         aria-label="LinkedIn"
         title="LinkedIn"
       >
@@ -71,7 +71,7 @@ export function SocialIcons() {
         href={site.social.github}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-zinc-400 hover:text-zinc-100 transition-colors"
+        className="text-zinc-700 hover:text-zinc-950 transition-colors"
         aria-label="GitHub"
         title="GitHub"
       >

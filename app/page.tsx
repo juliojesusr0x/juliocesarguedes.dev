@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { site } from "@/lib/site";
 import { SocialIcons } from "@/app/components/SocialIcons";
 
@@ -6,26 +5,17 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-2xl px-6 py-16 sm:py-24 text-center">
-        {/* Hero: image → name → tagline → description */}
+        {/* Hero: name → tagline → description */}
         <div className="flex flex-col items-center gap-6">
-          <Image
-            src="/me.png"
-            alt=""
-            width={144}
-            height={144}
-            priority
-            sizes="144px"
-            className="rounded-full border border-[var(--border)]"
-          />
           <div className="space-y-2">
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               {site.name}
             </h1>
-            <p className="font-mono text-sm text-zinc-500 sm:text-base">
+            <p className="text-sm text-zinc-700 sm:text-base">
               {site.tagline}
             </p>
           </div>
-          <p className="text-zinc-400 text-pretty text-lg leading-relaxed max-w-xl">
+          <p className="text-zinc-700 text-pretty text-lg leading-relaxed max-w-xl">
             {site.description}
           </p>
         </div>
@@ -39,7 +29,7 @@ export default function Home() {
         <section className="mt-16" aria-labelledby="tech-stack-heading">
           <h2
             id="tech-stack-heading"
-            className="font-mono text-xs uppercase tracking-wider text-zinc-500 mb-4"
+            className="text-xs uppercase tracking-wider text-zinc-700 mb-4"
           >
             Tech stack
           </h2>
@@ -47,7 +37,7 @@ export default function Home() {
             {site.techStack.map((tech) => (
               <span
                 key={tech}
-                className="font-mono text-xs px-3 py-1.5 rounded border border-[var(--border)] text-zinc-400"
+                className="text-xs px-3 py-1.5 rounded border border-[var(--border)] text-zinc-700"
               >
                 {tech}
               </span>
@@ -62,12 +52,12 @@ export default function Home() {
         <section className="text-left" aria-labelledby="projects-heading">
           <h2
             id="projects-heading"
-            className="font-mono text-xs uppercase tracking-wider text-zinc-500 mb-4 text-center"
+            className="text-xs uppercase tracking-wider text-zinc-700 mb-4 text-center"
           >
             Current projects
           </h2>
           {site.projects.length === 0 ? (
-            <p className="text-center text-zinc-500 text-sm">
+            <p className="text-center text-zinc-700 text-sm">
               Currently focused on building this site and next opportunities.
             </p>
           ) : (
@@ -86,13 +76,13 @@ export default function Home() {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-mono text-xs text-zinc-500 hover:text-zinc-300"
+                        className="text-xs text-zinc-700 hover:text-zinc-950"
                       >
                         View →
                       </a>
                     )}
                   </div>
-                  <p className="text-sm text-zinc-500">{project.description}</p>
+                  <p className="text-sm text-zinc-700">{project.description}</p>
                 </li>
               ))}
             </ul>
