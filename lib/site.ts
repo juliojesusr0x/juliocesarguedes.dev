@@ -28,7 +28,7 @@ export const site = {
   ],
   projects: [
     {
-      title: "Booking Agency (Bookingly)",
+      title: "Booking Agency (Bookingly) 1",
       description: "Booking Agency is a web application that allows users to book and manage their bookings.",
       url: "https://github.com/juliojesusr0x/booking-agency",
     }
