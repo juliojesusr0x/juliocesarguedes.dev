@@ -45,45 +45,44 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Thin separator */}
-        <hr className="my-12 border-[var(--border)]" />
-
-        {/* Current projects: rows */}
-        <section className="text-left" aria-labelledby="projects-heading">
-          <h2
-            id="projects-heading"
-            className="text-xs uppercase tracking-wider text-zinc-900 mb-4 text-center"
-          >
-            Current projects
-          </h2>
-          {site.projects.length > 0 && (
-            <ul className="space-y-4">
-              {site.projects.map((project) => (
-                <li
-                  key={project.title}
-                  className="flex flex-col gap-1 border-b border-[var(--border)] pb-4 last:border-0 last:pb-0"
-                >
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <span className="font-semibold text-foreground">
-                      {project.title}
-                    </span>
-                    {project.url && (
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-zinc-900 hover:text-zinc-950"
-                      >
-                        View →
-                      </a>
-                    )}
-                  </div>
-                  <p className="text-sm text-zinc-900">{project.description}</p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+        {site.projects.length > 0 && (
+          <>
+            <hr className="my-12 border-[var(--border)]" />
+            <section className="text-left" aria-labelledby="projects-heading">
+              <h2
+                id="projects-heading"
+                className="text-xs uppercase tracking-wider text-zinc-900 mb-4 text-center"
+              >
+                Current projects
+              </h2>
+              <ul className="space-y-4">
+                {site.projects.map((project) => (
+                  <li
+                    key={project.title}
+                    className="flex flex-col gap-1 border-b border-[var(--border)] pb-4 last:border-0 last:pb-0"
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <span className="font-semibold text-foreground">
+                        {project.title}
+                      </span>
+                      {project.url && (
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-zinc-900 hover:text-zinc-950"
+                        >
+                          View →
+                        </a>
+                      )}
+                    </div>
+                    <p className="text-sm text-zinc-900">{project.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </>
+        )}
       </div>
     </main>
   );
