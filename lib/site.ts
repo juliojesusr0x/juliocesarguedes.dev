@@ -26,13 +26,7 @@ export const site = {
     "SEO",
     "CI/CD",
   ],
-  projects: [
-    {
-      title: "Booking Agency (Bookingly)",
-      description: "Booking Agency is a web application that allows users to book and manage their bookings.",
-      url: "https://github.com/juliojesusr0x/booking-agency",
-    }
-  ] as Array<{ title: string; description: string; url?: string }>,
+  projects: [] as Array<{ title: string; description: string; url?: string }>,
 };
 
 export type Project = (typeof site.projects)[number];

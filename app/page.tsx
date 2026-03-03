@@ -11,11 +11,11 @@ export default function Home() {
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               {site.name}
             </h1>
-            <p className="text-sm text-zinc-700 sm:text-base">
+            <p className="text-sm text-zinc-900 sm:text-base">
               {site.tagline}
             </p>
           </div>
-          <p className="text-zinc-700 text-pretty text-lg leading-relaxed max-w-xl">
+          <p className="text-zinc-900 text-pretty text-lg leading-relaxed max-w-xl">
             {site.description}
           </p>
         </div>
@@ -29,7 +29,7 @@ export default function Home() {
         <section className="mt-16" aria-labelledby="tech-stack-heading">
           <h2
             id="tech-stack-heading"
-            className="text-xs uppercase tracking-wider text-zinc-700 mb-4"
+            className="text-xs uppercase tracking-wider text-zinc-900 mb-4"
           >
             Tech stack
           </h2>
@@ -37,7 +37,7 @@ export default function Home() {
             {site.techStack.map((tech) => (
               <span
                 key={tech}
-                className="text-xs px-3 py-1.5 rounded border border-[var(--border)] text-zinc-700"
+                className="text-xs px-3 py-1.5 rounded border border-[var(--border)] text-zinc-900"
               >
                 {tech}
               </span>
@@ -52,15 +52,11 @@ export default function Home() {
         <section className="text-left" aria-labelledby="projects-heading">
           <h2
             id="projects-heading"
-            className="text-xs uppercase tracking-wider text-zinc-700 mb-4 text-center"
+            className="text-xs uppercase tracking-wider text-zinc-900 mb-4 text-center"
           >
             Current projects
           </h2>
-          {site.projects.length === 0 ? (
-            <p className="text-center text-zinc-700 text-sm">
-              Currently focused on building this site and next opportunities.
-            </p>
-          ) : (
+          {site.projects.length > 0 && (
             <ul className="space-y-4">
               {site.projects.map((project) => (
                 <li
@@ -76,13 +72,13 @@ export default function Home() {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-zinc-700 hover:text-zinc-950"
+                        className="text-xs text-zinc-900 hover:text-zinc-950"
                       >
                         View →
                       </a>
                     )}
                   </div>
-                  <p className="text-sm text-zinc-700">{project.description}</p>
+                  <p className="text-sm text-zinc-900">{project.description}</p>
                 </li>
               ))}
             </ul>
