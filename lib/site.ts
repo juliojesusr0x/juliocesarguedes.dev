@@ -1,32 +1,41 @@
 export const site = {
-  name: "Júlio César Guedes",
-  tagline: "Senior Frontend Engineer — React · TypeScript · AI",
+  name: "Julio Cesar Guedes",
+  tagline: "Senior Frontend | React, TypeScript, Node.js, AWS",
+  location: "Florianópolis, Brazil",
   description:
-    "Senior Frontend Engineer focused on building scalable, high-performance web applications with strong emphasis on UX, maintainability, and engineering quality. I work with React, TypeScript, and AI-assisted development to ship clean, accessible, and fast experiences.",
-  email: "juliojesusrox@gmail.com", // replace with your contact email
+    "Senior Software Engineer specializing in frontend and full stack development, building scalable and high-performance web applications using React, Next.js, TypeScript, Node.js, and AWS. Experienced with high traffic platforms, data heavy dashboards, and large scale migrations, with strong focus on performance, maintainability, and clean architecture. Comfortable working across frontend, backend APIs, databases, and cloud environments, and actively leveraging AI-assisted development tools to improve engineering productivity.",
+  email: "juliocg22@gmail.com",
+  phone: "+55 31 99155-1734",
   social: {
-    linkedin: "https://www.linkedin.com/in/julioguedes/", // replace with your profile
-    github: "https://github.com/juliojesusr0x", // replace with your profile
+    linkedin: "https://linkedin.com/in/julioguedes",
+    github: "https://github.com/juliojesusr0x",
   },
-  techStack: [
-    "React",
-    "TypeScript",
-    "JavaScript (ES6+)",
-    "Redux",
-    "Context API",
-    "CSS/SASS",
-    "BEM",
-    "Nuxt.js",
-    "SSR",
-    "Jest",
-    "Cypress",
-    "Playwright",
-    "i18n",
-    "accessibility",
-    "SEO",
-    "CI/CD",
-  ],
+  skills: {
+    frontend: [
+      "React.js",
+      "Next.js",
+      "Vue.js",
+      "TypeScript",
+      "JavaScript",
+      "Redux",
+      "Context API",
+      "Zustand",
+      "Jotai",
+      "TanStack Query",
+      "React Hook Form",
+      "Zod",
+      "TailwindCSS",
+      "MUI",
+      "Shadcn",
+    ],
+    backend: ["Node.js", "PHP", "Laravel", "REST APIs", "Authentication"],
+    databases: ["PostgreSQL", "MySQL", "Redis"],
+    cloud: ["AWS Lambda", "Docker", "CI/CD", "Jenkins", "Microservices"],
+    testing: ["Vitest", "React Testing Library", "Cypress", "Playwright"],
+    tools: ["Git", "GitHub", "GitLab", "Bitbucket", "Jira"],
+  },
   projects: [] as Array<{ title: string; description: string; url?: string }>,
 };
 
 export type Project = (typeof site.projects)[number];
+export type SkillCategory = keyof typeof site.skills;

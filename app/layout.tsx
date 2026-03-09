@@ -1,9 +1,20 @@
 import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const title = "Júlio César Guedes | Senior Frontend Engineer";
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const title = "Julio Cesar Guedes | Senior Frontend Engineer";
 const description =
-  "Senior Frontend Engineer focused on scalable, high-performance web applications. React, TypeScript, AI-assisted development.";
+  "Senior Software Engineer specializing in frontend and full stack development. React, Next.js, TypeScript, Node.js, AWS. High traffic platforms, data dashboards, clean architecture.";
 
 export const metadata: Metadata = {
   title,
@@ -13,7 +24,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: "https://juliocesarguedes.dev",
-    siteName: "Júlio César Guedes",
+    siteName: "Julio Cesar Guedes",
     type: "website",
   },
   twitter: {
@@ -26,7 +37,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f0f0ef",
+  themeColor: "#fafaf9",
 };
 
 export default function RootLayout({
@@ -36,7 +47,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
