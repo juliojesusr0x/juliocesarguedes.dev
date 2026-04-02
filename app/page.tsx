@@ -13,6 +13,7 @@ const skillLabels: Record<SkillCategory, string> = {
   databases: "Databases",
   cloud: "Cloud & DevOps",
   testing: "Testing",
+  ai: "AI",
   tools: "Tools",
 };
 

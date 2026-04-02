@@ -31,6 +31,8 @@
   "React Testing Library": 6,
   "Cypress": 6,
   "Playwright": 2,
+  "Cursor AI": 2,
+  "Claude CLI": 2,
   "Git": 8,
   "GitHub": 8,
   "GitLab": 2,

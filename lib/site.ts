@@ -32,6 +32,7 @@ export const site = {
     databases: ["PostgreSQL", "MySQL", "Redis"],
     cloud: ["AWS Lambda", "Docker", "CI/CD", "Jenkins", "Microservices"],
     testing: ["Vitest", "React Testing Library", "Cypress", "Playwright"],
+    ai: ["Cursor AI", "Claude CLI"],
     tools: ["Git", "GitHub", "GitLab", "Bitbucket", "Jira"],
   },
   projects: [] as Array<{ title: string; description: string; url?: string }>,
