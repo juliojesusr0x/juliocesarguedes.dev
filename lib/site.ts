@@ -3,7 +3,7 @@ export const site = {
   tagline: "Senior Frontend | React, TypeScript, Node.js, AWS",
   location: "Florianópolis, Brazil",
   description:
-    "Senior Software Engineer specializing in frontend and full stack development, building scalable and high-performance web applications using React, Next.js, TypeScript, Node.js, and AWS. Experienced with high traffic platforms, data heavy dashboards, and large scale migrations, with strong focus on performance, maintainability, and clean architecture. Comfortable working across frontend, backend APIs, databases, and cloud environments, and actively leveraging AI-assisted development tools to improve engineering productivity.",
+    "Senior Software Engineer with 17+ years of experience specializing in frontend and full stack development, building scalable and high performance web applications using React, Next.js, TypeScript, Node.js, and AWS. Experienced working on high traffic platforms, data heavy dashboards, and large scale migrations, with a strong focus on performance, maintainability, and clean architecture.",
   email: "juliocg22@gmail.com",
   phone: "+55 31 99155-1734",
   social: {
