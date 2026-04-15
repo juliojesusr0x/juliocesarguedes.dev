@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 const title = "Julio Cesar Guedes | Senior Frontend Engineer";
 const description =
-  "Senior Software Engineer specializing in frontend and full stack development. React, Next.js, TypeScript, Node.js, AWS. High traffic platforms, data dashboards, clean architecture.";
+  "Senior Frontend Engineer (React, TypeScript, Next.js). Portfolio: live enterprise work and projects in progress—Blueticket, Potássio do Brasil, Audiofy, Terço App, Rezalve.";
 
 export const metadata: Metadata = {
   title,
