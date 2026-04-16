@@ -53,6 +53,16 @@ function BuildingProjectCard({ project }: { project: BuildingProject }) {
           </span>
         </div>
         <div className="flex shrink-0 flex-wrap justify-end gap-2 font-mono text-[10px] sm:text-xs">
+          {project.url && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-stone-600 underline decoration-stone-300 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600"
+            >
+              Visit site →
+            </a>
+          )}
           {project.githubUrl && (
             <a
               href={project.githubUrl}

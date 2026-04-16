@@ -2,6 +2,7 @@ export type BuildingProject = {
   title: string;
   description: string;
   tech: readonly string[];
+  url?: string;
   githubUrl?: string;
   comingSoon?: boolean;
 };
@@ -76,10 +77,11 @@ export const site = {
       githubUrl: "https://github.com/juliojesusr0x/terco-app",
     },
     {
-      title: "Rezalve",
+      title: "Resumin.site",
       description:
         "Transforms your resume into API-ready variables, with a browser extension that auto-fills recruiter forms on job sites.",
       tech: ["Next.js"],
+      url: "https://resumin.site",
       comingSoon: true,
     },
   ] satisfies readonly BuildingProject[],
