@@ -2,6 +2,9 @@ import { site } from "@/lib/site";
 
 const size = 26;
 
+const linkClass =
+  "text-on-surface-variant transition-colors hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary";
+
 export function LinkedInIcon() {
   return (
     <svg
@@ -56,10 +59,10 @@ function CalendlyIcon() {
 
 export function SocialIcons() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-6">
+    <div className="flex flex-wrap items-center justify-start gap-5 sm:gap-6">
       <a
         href={`mailto:${site.email}`}
-        className="text-stone-600 transition-colors hover:text-stone-900"
+        className={linkClass}
         aria-label="Email"
         title="Email"
       >
@@ -83,7 +86,7 @@ export function SocialIcons() {
         href={site.social.linkedin}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-stone-600 transition-colors hover:text-stone-900"
+        className={linkClass}
         aria-label="LinkedIn"
         title="LinkedIn"
       >
@@ -93,7 +96,7 @@ export function SocialIcons() {
         href={site.social.github}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-stone-600 transition-colors hover:text-stone-900"
+        className={linkClass}
         aria-label="GitHub"
         title="GitHub"
       >
@@ -103,7 +106,7 @@ export function SocialIcons() {
         href={site.social.calendly}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-stone-600 transition-colors hover:text-stone-900"
+        className={linkClass}
         aria-label="Schedule a call on Calendly"
         title="Calendly"
       >

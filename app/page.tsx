@@ -1,174 +1,158 @@
-import { site } from "@/lib/site";
 import { SocialIcons } from "@/app/components/SocialIcons";
+import { site } from "@/lib/site";
 import type { BuildingProject, LiveProject } from "@/lib/site";
 
-function TechPills({ tech }: { tech: readonly string[] }) {
-  return (
-    <ul className="mt-2.5 flex flex-wrap gap-1.5">
-      {tech.map((t) => (
-        <li key={t}>
-          <span className="inline-block rounded border border-stone-200 bg-white px-2 py-0.5 font-mono text-[10px] text-stone-800 sm:text-xs">
-            {t}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-}
+type ProjectRowProps = {
+  title: string;
+  description: string;
+  tech: readonly string[];
+  url?: string;
+  githubUrl?: string;
+  comingSoon?: boolean;
+  status?: string;
+};
 
-function LiveProjectCard({ project }: { project: LiveProject }) {
+function ProjectRow({
+  title,
+  description,
+  tech,
+  url,
+  githubUrl,
+  comingSoon,
+  status,
+}: ProjectRowProps) {
   return (
-    <article className="rounded-lg border border-stone-200 bg-(--card)/90 p-4 sm:p-5">
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <h3 className="text-base font-semibold text-stone-900 sm:text-lg">
-          {project.title}
-        </h3>
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="shrink-0 font-mono text-[10px] text-stone-600 underline decoration-stone-300 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600 sm:text-xs"
-        >
-          Visit site →
-        </a>
-      </div>
-      <p className="mt-2 text-pretty text-sm leading-relaxed text-stone-600">
-        {project.description}
-      </p>
-      <TechPills tech={project.tech} />
-    </article>
-  );
-}
-
-function BuildingProjectCard({ project }: { project: BuildingProject }) {
-  return (
-    <article className="rounded-lg border border-dashed border-stone-300 bg-(--card)/50 p-4 sm:p-5">
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <h3 className="text-base font-semibold text-stone-900 sm:text-lg">
-            {project.title}
+    <li className="border-t border-outline-variant/30 py-6 first:border-t-0">
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <h3 className="font-display text-xl font-semibold text-on-surface">
+            {title}
           </h3>
-          <span className="rounded-full border border-stone-300 bg-stone-100 px-2 py-0.5 font-mono text-[9px] font-medium uppercase tracking-wide text-stone-600 sm:text-[10px]">
-            Building
-          </span>
+          {status ? (
+            <span className="font-display text-[11px] uppercase tracking-[0.18em] text-secondary">
+              [{status}]
+            </span>
+          ) : null}
         </div>
-        <div className="flex shrink-0 flex-wrap justify-end gap-2 font-mono text-[10px] sm:text-xs">
-          {project.url && (
+        <div className="flex flex-wrap gap-4 font-display text-[11px] uppercase tracking-[0.15em] text-secondary/80">
+          {url ? (
             <a
-              href={project.url}
+              href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-stone-600 underline decoration-stone-300 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600"
+              className="transition-colors hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
             >
-              Visit site →
+              &gt; visit
             </a>
-          )}
-          {project.githubUrl && (
+          ) : null}
+          {githubUrl ? (
             <a
-              href={project.githubUrl}
+              href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-stone-600 underline decoration-stone-300 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600"
+              className="transition-colors hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
             >
-              GitHub →
+              &gt; github
             </a>
-          )}
-          {project.comingSoon && (
-            <span className="text-stone-500">Coming soon</span>
-          )}
+          ) : null}
+          {comingSoon ? (
+            <span className="text-on-surface-variant/70">&gt; coming soon</span>
+          ) : null}
         </div>
       </div>
-      <p className="mt-2 text-pretty text-sm leading-relaxed text-stone-600">
-        {project.description}
+      <p className="mt-3 max-w-3xl text-pretty text-base leading-relaxed text-on-surface-variant">
+        {description}
       </p>
-      <TechPills tech={project.tech} />
-    </article>
+      <ul className="mt-4 flex flex-wrap gap-2">
+        {tech.map((t) => (
+          <li
+            key={t}
+            className="border border-outline-variant/40 bg-surface-container px-3 py-1 font-display text-[11px] uppercase tracking-[0.15em] text-primary-fixed shadow-[inset_0_0_8px_rgba(0,0,0,0.2)]"
+          >
+            {t}
+          </li>
+        ))}
+      </ul>
+    </li>
   );
 }
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto flex w-full max-w-4xl flex-col px-4 py-10 sm:px-6 sm:py-14">
-        <header className="text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
-            {site.name}
-          </h1>
-          <p className="mx-auto mt-2 max-w-2xl text-pretty font-mono text-xs leading-snug text-stone-700 sm:text-sm">
-            {site.titleLine}
-          </p>
-          <p className="mt-1 text-xs text-stone-500 sm:text-sm">
-            {site.subtitleLine}
-          </p>
-          <p className="mt-0.5 text-xs text-stone-500">{site.location}</p>
+    <main className="relative min-h-screen bg-background text-on-surface">
+      <div
+        className="pointer-events-none absolute inset-0 blueprint-grid opacity-60"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-y-0 left-[15%] hidden w-px bg-secondary/10 md:block"
+        aria-hidden
+      />
+      <div className="relative mx-auto w-full max-w-4xl px-6 py-16 sm:px-10 sm:py-20 md:px-16">
+        <header className="flex flex-col gap-6">
+          <div className="relative">
+            <span
+              className="absolute -left-4 top-3 hidden h-2 w-2 border border-secondary bg-primary-container sm:block"
+              aria-hidden
+            />
+            <h1 className="font-display text-4xl font-bold tracking-tight text-on-surface sm:text-5xl">
+              {site.name}
+            </h1>
+            <p className="mt-2 flex flex-wrap items-center gap-3 font-display text-xl text-secondary/90 sm:text-2xl">
+              <span className="h-[2px] w-5 shrink-0 bg-secondary/50" />
+              Senior Frontend Engineer
+            </p>
+          </div>
+          <SocialIcons />
         </header>
 
-        <div className="mt-5 flex justify-center sm:mt-6">
-          <SocialIcons />
-        </div>
-
         <section
-          className="mt-8 sm:mt-10"
-          aria-labelledby="about-heading"
-        >
-          <h2
-            id="about-heading"
-            className="text-center font-mono text-[10px] font-medium uppercase tracking-widest text-stone-500"
-          >
-            About
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-pretty text-center text-sm leading-relaxed text-stone-700 sm:text-base">
-            {site.about}
-          </p>
-        </section>
-
-        <section
-          className="mt-8 sm:mt-10"
-          aria-labelledby="skills-heading"
-        >
-          <h2
-            id="skills-heading"
-            className="text-center font-mono text-[10px] font-medium uppercase tracking-widest text-stone-500"
-          >
-            Core technologies
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-stone-600 sm:text-base">
-            {site.skillsHighlight.join(" · ")}
-          </p>
-        </section>
-
-        <section
-          className="mt-10 sm:mt-12"
+          className="mt-14 sm:mt-16"
           aria-labelledby="live-projects-heading"
         >
           <h2
             id="live-projects-heading"
-            className="font-mono text-[10px] font-medium uppercase tracking-widest text-stone-500"
+            className="font-display text-[11px] uppercase tracking-[0.25em] text-secondary"
           >
-            Live projects
+            <span className="text-secondary/50">&gt; </span>live_projects
           </h2>
-          <div className="mt-4 grid gap-4 sm:gap-5">
-            {site.liveProjects.map((project) => (
-              <LiveProjectCard key={project.title} project={project} />
+          <ol className="mt-6 list-none pl-0">
+            {site.liveProjects.map((project: LiveProject) => (
+              <ProjectRow
+                key={project.title}
+                title={project.title}
+                description={project.description}
+                tech={project.tech}
+                url={project.url}
+              />
             ))}
-          </div>
+          </ol>
         </section>
 
         <section
-          className="mt-10 sm:mt-12"
+          className="mt-14 sm:mt-16"
           aria-labelledby="building-projects-heading"
         >
           <h2
             id="building-projects-heading"
-            className="font-mono text-[10px] font-medium uppercase tracking-widest text-stone-500"
+            className="font-display text-[11px] uppercase tracking-[0.25em] text-secondary"
           >
-            Building
+            <span className="text-secondary/50">&gt; </span>building
           </h2>
-          <div className="mt-4 grid gap-4 sm:gap-5">
-            {site.buildingProjects.map((project) => (
-              <BuildingProjectCard key={project.title} project={project} />
+          <ol className="mt-6 list-none pl-0">
+            {site.buildingProjects.map((project: BuildingProject) => (
+              <ProjectRow
+                key={project.title}
+                title={project.title}
+                description={project.description}
+                tech={project.tech}
+                url={project.url}
+                githubUrl={project.githubUrl}
+                comingSoon={project.comingSoon}
+                status="BUILDING"
+              />
             ))}
-          </div>
+          </ol>
         </section>
       </div>
     </main>
