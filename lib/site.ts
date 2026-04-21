@@ -73,7 +73,7 @@ export const site = {
       title: "Terço App",
       description:
         "Catholic prayer app: browse prayers, build custom prayer queues, and generate shareable prayer pages from your list.",
-      tech: ["React", "Node.js", "NestJS"],
+      tech: ["React", "TypeScript", "TanStack Query", "Zod", "Tailwind CSS", "Supabase", "Vercel"],
       githubUrl: "https://github.com/juliojesusr0x/terco-app",
     },
     {
