@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
+import { site } from "@/lib/site";
 
-export const alt =
-  "Julio Cesar Guedes — Senior Frontend Engineer | React, TypeScript, Next.js";
+export const alt = `${site.name} — ${site.titleLine}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -21,7 +21,7 @@ export default function Image() {
           padding: 48,
         }}
       >
-        <div style={{ fontSize: 56, fontWeight: 600 }}>Julio Cesar Guedes</div>
+        <div style={{ fontSize: 56, fontWeight: 600 }}>{site.name}</div>
         <div
           style={{
             marginTop: 16,
@@ -31,7 +31,7 @@ export default function Image() {
             maxWidth: 900,
           }}
         >
-          Senior Frontend Engineer · React + TypeScript + Next.js
+          {site.role}
         </div>
         <div
           style={{
@@ -40,7 +40,7 @@ export default function Image() {
             color: "#78716c",
           }}
         >
-          Performance & architecture · 17+ years
+          {site.subtitleLine}
         </div>
       </div>
     ),

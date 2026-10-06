@@ -16,11 +16,13 @@ export type LiveProject = {
 
 export const site = {
   name: "Julio Cesar Guedes",
-  titleLine: "Senior Frontend Engineer | React + TypeScript + Next.js",
-  subtitleLine: "Performance & architecture · 17+ years of experience",
+  role: "Senior Full Stack Engineer",
+  titleLine:
+    "Senior Full Stack Engineer | Frontend Architecture | System Design | AI",
+  subtitleLine: "Frontend architecture · Backend systems · System design · AI",
   location: "Florianópolis, Brazil",
   about:
-    "Senior Software Engineer with 17+ years of experience building scalable, high-performance web applications at enterprise scale. I specialize in React, TypeScript, and Next.js, with a focus on performance optimization and large-scale frontend architecture. I have led migrations of 500+ client websites to modern stacks, improving load times, SEO, and user experience on complex platforms. Strong in reusable design systems, SSR and SEO best practices, and collaborating across frontend and backend.",
+    "Senior Full Stack Engineer with 17+ years of experience building scalable, high-performance web applications at enterprise scale. I specialize in frontend architecture (React, TypeScript, Next.js) and backend systems (Node.js, PostgreSQL), with a focus on system design, performance optimization, and AI-powered products. I have led migrations of 500+ client websites to modern stacks, improving load times, SEO, and user experience on complex platforms. Strong in reusable design systems, SSR and SEO best practices, and collaborating across frontend and backend.",
   skillsHighlight: [
     "React.js",
     "Next.js",

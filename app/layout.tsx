@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -13,9 +14,9 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const title = "Julio Cesar Guedes | Senior Frontend Engineer";
+const title = `${site.name} | ${site.role}`;
 const description =
-  "Senior Frontend Engineer (React, TypeScript, Next.js). Portfolio: live enterprise work and projects in progress—Blueticket, Potássio do Brasil, Audiofy, Terço App, Resumin.site.";
+  "Senior Full Stack Engineer: frontend architecture, system design, and AI (React, TypeScript, Node.js, PostgreSQL). Portfolio: live enterprise work and projects in progress—Blueticket, Potássio do Brasil, Audiofy, Terço App, Resumin.site.";
 
 export const metadata: Metadata = {
   title,

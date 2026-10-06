@@ -100,7 +100,7 @@ export default function Home() {
             </h1>
             <p className="mt-2 flex flex-wrap items-center gap-3 font-display text-xl text-secondary/90 sm:text-2xl">
               <span className="h-[2px] w-5 shrink-0 bg-secondary/50" />
-              Senior Frontend Engineer
+              {site.role}
             </p>
           </div>
           <SocialIcons />
