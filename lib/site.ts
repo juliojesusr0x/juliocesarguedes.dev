@@ -60,19 +60,6 @@ export const site = {
   ] satisfies readonly LiveProject[],
   buildingProjects: [
     {
-      title: "Audiofy",
-      description:
-        "Mobile app that converts video files to audio and plays them in the background—saved clips, WhatsApp videos, Loom recordings, and lectures—while you use your phone for other tasks.",
-      tech: [
-        "React Native",
-        "Expo",
-        "TypeScript",
-        "FFmpeg",
-        "react-native-track-player",
-      ],
-      githubUrl: "https://github.com/juliojesusr0x/audiofy",
-    },
-    {
       title: "Terço App",
       description:
         "Catholic prayer app: browse prayers, build custom prayer queues, and generate shareable prayer pages from your list.",
