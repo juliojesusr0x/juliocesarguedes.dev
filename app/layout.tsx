@@ -21,11 +21,11 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  metadataBase: new URL("https://juliocesarguedes.dev"),
+  metadataBase: new URL(site.url),
   openGraph: {
     title,
     description,
-    url: "https://juliocesarguedes.dev",
+    url: site.url,
     siteName: "Julio Cesar Guedes",
     type: "website",
   },

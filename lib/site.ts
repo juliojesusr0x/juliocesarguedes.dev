@@ -16,6 +16,7 @@ export type LiveProject = {
 
 export const site = {
   name: "Julio Cesar Guedes",
+  url: "https://juliocesarguedes.dev",
   role: "Senior Full Stack Engineer",
   titleLine:
     "Senior Full Stack Engineer | Frontend Architecture | System Design | AI",
