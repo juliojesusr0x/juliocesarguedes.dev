@@ -1,17 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Serif, Permanent_Marker } from "next/font/google";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: "italic",
+});
+
+const permanentMarker = Permanent_Marker({
+  variable: "--font-marker",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const title = `${site.name} | ${site.role}`;
@@ -39,7 +46,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#08132a",
+  themeColor: "#0a0a0b",
 };
 
 export default function RootLayout({
@@ -50,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} antialiased`}
+        className={`${bricolage.variable} ${instrumentSerif.variable} ${permanentMarker.variable} antialiased`}
       >
         {children}
       </body>

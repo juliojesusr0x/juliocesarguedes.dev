@@ -22,6 +22,8 @@ export const site = {
     "Senior Full Stack Engineer | Frontend Architecture | System Design | AI",
   subtitleLine: "Frontend architecture · Backend systems · System design · AI",
   location: "Florianópolis, Brazil",
+  tagline:
+    "17+ years building fast, scalable web apps, from frontend architecture to system design and AI.",
   about:
     "Senior Full Stack Engineer with 17+ years of experience building scalable, high-performance web applications at enterprise scale. I specialize in frontend architecture (React, TypeScript, Next.js) and backend systems (Node.js, PostgreSQL), with a focus on system design, performance optimization, and AI-powered products. I have led migrations of 500+ client websites to modern stacks, improving load times, SEO, and user experience on complex platforms. Strong in reusable design systems, SSR and SEO best practices, and collaborating across frontend and backend.",
   skillsHighlight: [
