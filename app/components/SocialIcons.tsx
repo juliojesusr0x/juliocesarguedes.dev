@@ -1,9 +1,10 @@
+import { MessageButton } from "@/app/components/MessageButton";
 import { site } from "@/lib/site";
 
-const size = 26;
+const size = 22;
 
 const linkClass =
-  "text-on-surface-variant transition-colors hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary";
+  "wiggle grid size-10 place-items-center sm:size-12 rounded-full border border-white/15 bg-white/[0.04] text-white transition-colors hover:border-secondary hover:bg-secondary hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary";
 
 export function LinkedInIcon() {
   return (
@@ -59,7 +60,7 @@ function CalendlyIcon() {
 
 export function SocialIcons() {
   return (
-    <div className="flex flex-wrap items-center justify-start gap-5 sm:gap-6">
+    <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
       <a
         href={`mailto:${site.email}`}
         className={linkClass}
@@ -112,6 +113,7 @@ export function SocialIcons() {
       >
         <CalendlyIcon />
       </a>
+      <MessageButton className={linkClass} />
     </div>
   );
 }
