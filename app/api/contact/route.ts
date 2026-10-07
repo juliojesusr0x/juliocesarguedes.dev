@@ -19,6 +19,10 @@ const seen = new Map<string, number>();
 
 const secret = () => process.env.CONTACT_SECRET ?? process.env.RESEND_API_KEY;
 
+// Read at request time, so the page needs no build-time variable (NEXT_PUBLIC_* is frozen into the bundle).
+const turnstileSiteKey = () =>
+  process.env.TURNSTILE_SITE_KEY ?? process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
 const sign = (stamp: string, key: string) =>
   createHmac("sha256", key).update(stamp).digest("hex");
 
@@ -75,14 +79,29 @@ function tooMany(ip: string) {
   return recent.length > MAX_PER_WINDOW;
 }
 
-const reply = (status: number, body: { ok: true } | { error: string } | { token: string }) =>
+const reply = (
+  status: number,
+  body: { ok: true } | { error: string } | { token: string; siteKey?: string },
+) =>
   Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
 
 export async function GET() {
   const key = secret();
   if (!key) return reply(503, { error: "unavailable" });
+
+  // The widget is shown exactly when the server will demand it, so the two cannot disagree.
+  const enforced = Boolean(process.env.TURNSTILE_SECRET_KEY);
+  const siteKey = turnstileSiteKey();
+  if (enforced && !siteKey) {
+    console.error("[contact] TURNSTILE_SECRET_KEY is set but TURNSTILE_SITE_KEY is not: form disabled.");
+    return reply(503, { error: "unavailable" });
+  }
+
   const stamp = String(Date.now());
-  return reply(200, { token: `${stamp}.${sign(stamp, key)}` });
+  return reply(200, {
+    token: `${stamp}.${sign(stamp, key)}`,
+    ...(enforced && siteKey ? { siteKey } : {}),
+  });
 }
 
 export async function POST(request: Request) {

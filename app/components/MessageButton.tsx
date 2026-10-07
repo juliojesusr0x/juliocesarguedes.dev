@@ -5,7 +5,6 @@ import { createPortal } from "react-dom";
 import { Turnstile } from "@/app/components/Turnstile";
 import { site } from "@/lib/site";
 
-const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 const ERRORS: Record<string, string> = {
   invalid: "Please check your name, email and message (at least 5 characters).",
@@ -18,14 +17,22 @@ const ERRORS: Record<string, string> = {
 const CHECK_UNAVAILABLE =
   "The spam check couldn't load (an ad blocker can cause this). Please use the email link below.";
 
-/** A signed "opened at" stamp from the server, sent back with the message (anti-spam). */
-async function loadToken() {
+const UNAVAILABLE = "The form isn't available right now. Please use one of the links below.";
+
+type Session = { token: string; siteKey: string };
+
+/**
+ * A signed "opened at" stamp from the server, sent back with the message (anti-spam),
+ * plus the Turnstile site key when the server will demand a check. null: form unavailable.
+ */
+async function loadSession(): Promise<Session | null> {
   try {
     const response = await fetch("/api/contact", { cache: "no-store" });
-    const data: { token?: string } = await response.json();
-    return data.token ?? "";
+    if (!response.ok) return null;
+    const data: { token?: string; siteKey?: string } = await response.json();
+    return data.token ? { token: data.token, siteKey: data.siteKey ?? "" } : null;
   } catch {
-    return "";
+    return null;
   }
 }
 const FALLBACK_ERROR = "Couldn't send that right now. Please try again, or use one of the links below.";
@@ -42,18 +49,24 @@ function MessageDialog({ onClose }: { onClose: () => void }) {
   const [error, setError] = useState("");
   const [sentTo, setSentTo] = useState("");
   const [token, setToken] = useState("");
+  const [siteKey, setSiteKey] = useState("");
+  const [unavailable, setUnavailable] = useState(false);
 
   const [challenge, setChallenge] = useState("");
   const [challengeNonce, setChallengeNonce] = useState(0);
   const [checkBroken, setCheckBroken] = useState(false);
 
   useEffect(() => {
-    void loadToken().then(setToken);
+    void loadSession().then((session) => {
+      if (!session) return setUnavailable(true);
+      setToken(session.token);
+      setSiteKey(session.siteKey);
+    });
   }, []);
 
   // Every token is single use: after any failed attempt, get fresh ones.
   const renewTokens = () => {
-    void loadToken().then(setToken);
+    void loadSession().then((session) => setToken(session?.token ?? ""));
     setChallenge("");
     setChallengeNonce((n) => n + 1);
   };
@@ -167,13 +180,18 @@ function MessageDialog({ onClose }: { onClose: () => void }) {
             <input name="company" type="text" tabIndex={-1} autoComplete="off" />
           </label>
 
-          {TURNSTILE_SITE_KEY ? (
+          {siteKey ? (
             <Turnstile
-              siteKey={TURNSTILE_SITE_KEY}
+              siteKey={siteKey}
               nonce={challengeNonce}
               onToken={setChallenge}
               onUnavailable={() => setCheckBroken(true)}
             />
+          ) : null}
+          {unavailable ? (
+            <p role="alert" className="rounded-2xl border border-secondary/60 px-4 py-3 text-sm">
+              {UNAVAILABLE}
+            </p>
           ) : null}
           {checkBroken ? (
             <p role="alert" className="rounded-2xl border border-secondary/60 px-4 py-3 text-sm">
@@ -190,7 +208,7 @@ function MessageDialog({ onClose }: { onClose: () => void }) {
           <div className="flex flex-wrap items-center gap-3">
             <button
               type="submit"
-              disabled={status === "sending" || !token || (TURNSTILE_SITE_KEY !== "" && !challenge)}
+              disabled={status === "sending" || !token || (siteKey !== "" && !challenge)}
               className="rounded-full bg-secondary px-6 py-3 font-extrabold uppercase tracking-tight text-black transition-colors hover:bg-white disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
             >
               {status === "sending" ? "Sending…" : "Send"}
