@@ -153,10 +153,9 @@ function collisions(pieces: HTMLElement[], strip: Strip) {
 }
 
 /**
- * Re-deals the hidden pieces and the stack banner on every page load. Runs in
+ * Re-deals the pieces and the stack banner on every page load. Runs in
  * the browser because a server-side random would be frozen into the
- * prerendered HTML for everyone. Pieces are still covered by the wall (and
- * invisible) when this runs. Each deal is measured, since content has a fixed
+ * prerendered HTML for everyone. Each deal is measured, since content has a fixed
  * pixel size but layouts are in %, so the same layout can collide on a short
  * screen; the best of several deals wins.
  */
