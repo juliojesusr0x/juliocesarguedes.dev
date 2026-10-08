@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { desktopLayouts, mobileLayouts, type Slot } from "@/app/components/layouts";
 import { Scatter } from "@/app/components/Scatter";
 import { SocialIcons } from "@/app/components/SocialIcons";
-import { SprayWall } from "@/app/components/SprayWall";
+import { Highlighter } from "@/app/components/Highlighter";
 import { site } from "@/lib/site";
 
 const ROLE_ACCENT = "Full Stack";
@@ -40,8 +40,8 @@ type PieceProps = {
 };
 
 /**
- * One hidden piece of the site. The outer node only places it on the screen;
- * the inner `data-find` node is what SprayWall watches and animates in.
+ * One piece of the site. The outer node only places it on the screen;
+ * <Scatter /> re-deals its position in the browser.
  */
 function Piece({ slot, className = "", tilt, as: Tag = "div", children }: PieceProps) {
   // Server-rendered default spot; <Scatter /> re-deals it in the browser.
@@ -59,7 +59,6 @@ function Piece({ slot, className = "", tilt, as: Tag = "div", children }: PieceP
       })}
     >
       <div
-        data-find
         className={`tilt ${className}`}
         style={tilt ? vars({ "--tilt": tilt }) : undefined}
       >
@@ -86,7 +85,7 @@ function Role() {
 export default function Home() {
   return (
     <main>
-      <SprayWall>
+      <Highlighter>
         <Scatter />
         <div className="backdrop absolute inset-0 overflow-hidden">
           <Piece
@@ -212,7 +211,6 @@ export default function Home() {
             })}
           >
             <div
-              data-find
               data-marquee
               className="overflow-hidden border-y border-white/10 bg-black/50 py-2 sm:py-3"
             >
@@ -241,7 +239,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </SprayWall>
+      </Highlighter>
     </main>
   );
 }
