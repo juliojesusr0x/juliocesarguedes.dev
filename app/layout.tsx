@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Bricolage_Grotesque, Instrument_Serif, Permanent_Marker } from "next/font/google";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -60,6 +61,12 @@ export default function RootLayout({
         className={`${bricolage.variable} ${instrumentSerif.variable} ${permanentMarker.variable} antialiased`}
       >
         {children}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="e34808e6-890e-4a10-94bd-ee6181627bb0"
+          data-domains={new URL(site.url).hostname}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
