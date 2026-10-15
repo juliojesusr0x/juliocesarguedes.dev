@@ -6,10 +6,9 @@ export function GET() {
   const live = site.liveProjects.map(
     (p) => `- [${p.title}](${p.url}): ${p.description} Stack: ${p.tech.join(", ")}.`,
   );
-  const building = site.buildingProjects.map((p) => {
-    const link = "url" in p ? p.url : p.githubUrl;
-    return `- [${p.title}](${link}): ${p.description} Stack: ${p.tech.join(", ")}.`;
-  });
+  const building = site.buildingProjects.map(
+    (p) => `- [${p.title}](${p.url}): ${p.description} Stack: ${p.tech.join(", ")}.`,
+  );
 
   const body = `# ${site.name}
 

@@ -19,7 +19,7 @@ const projects = [
     title: p.title,
     description: p.description,
     tech: p.tech,
-    href: p.githubUrl ?? p.url,
+    href: p.url,
     status: p.comingSoon ? "Soon" : "Building",
   })),
 ];
