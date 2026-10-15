@@ -2,8 +2,7 @@ export type BuildingProject = {
   title: string;
   description: string;
   tech: readonly string[];
-  url?: string;
-  githubUrl?: string;
+  url: string;
   comingSoon?: boolean;
 };
 
@@ -79,7 +78,7 @@ export const site = {
         "Playwright",
         "Vercel",
       ],
-      githubUrl: "https://github.com/juliojesusr0x/terco-app",
+      url: "https://terco-app.com",
     },
     {
       title: "Resumin.site",
