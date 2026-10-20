@@ -58,28 +58,32 @@ export const site = {
       tech: ["PHP", "CodeIgniter", "MySQL", "JavaScript", "CSS"],
       url: "https://www.potassiodobrasil.com.br",
     },
-  ] satisfies readonly LiveProject[],
-  buildingProjects: [
     {
       title: "Terço App",
       description:
-        "Catholic prayer app: browse prayers, build custom prayer queues, and generate shareable prayer pages from your list.",
+        "Catholic prayer app in Brazilian Portuguese, with English coming soon: find a prayer, hear it read by a calm synthetic voice with each paragraph highlighted as it plays, and build your own daily prayer sequence. Includes a passkey-protected admin where operators write prayers and generate their audio.",
       tech: [
         "Next.js",
-        "React",
         "TypeScript",
+        "PostgreSQL",
+        "ElevenLabs",
+        "React",
         "Tailwind CSS",
         "Drizzle ORM",
-        "PostgreSQL",
-        "Better Auth",
-        "ElevenLabs",
+        "Neon",
+        "Better Auth (passkeys)",
+        "next-intl",
+        "Zustand",
         "Cloudflare R2",
+        "Cloudflare Turnstile",
         "Vitest",
         "Playwright",
         "Vercel",
       ],
       url: "https://terco-app.com",
     },
+  ] satisfies readonly LiveProject[],
+  buildingProjects: [
     {
       title: "Resumin.site",
       description:
