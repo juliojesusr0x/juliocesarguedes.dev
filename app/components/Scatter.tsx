@@ -165,29 +165,52 @@ export function Scatter() {
     const banner = document.querySelector<HTMLElement>("[data-banner]");
     const marquee = banner?.querySelector<HTMLElement>("[data-marquee]");
     if (!banner || !marquee) return;
-    const thick = marquee.offsetHeight;
 
-    // Orientation is drawn first, uniformly, so every one shows up equally often;
-    // a mode that cannot fit this screen (side strips on a phone) falls through.
-    let best = Infinity;
-    let bestStyles: Array<[Element, string]> = [];
-    for (const mode of shuffled(MODES.length).map((i) => MODES[i])) {
-      for (let i = 0; i < TRIES_PER_MODE && best > 0; i++) {
-        const strip = dealStrip(mode, thick);
-        deal(pieces, insetFor(mode, thick));
-        applyStrip(banner, strip);
-        const score = collisions(pieces, strip);
-        if (score < best) {
-          best = score;
-          bestStyles = [banner, ...pieces, ...pieces.map((p) => p.firstElementChild!)].map(
-            (el) => [el, el.getAttribute("style") ?? ""] as [Element, string],
-          );
+    const dealAll = () => {
+      const thick = marquee.offsetHeight; // can differ per breakpoint
+      // Orientation is drawn first, uniformly, so every one shows up equally often;
+      // a mode that cannot fit this screen (side strips on a phone) falls through.
+      let best = Infinity;
+      let bestStyles: Array<[Element, string]> = [];
+      for (const mode of shuffled(MODES.length).map((i) => MODES[i])) {
+        for (let i = 0; i < TRIES_PER_MODE && best > 0; i++) {
+          const strip = dealStrip(mode, thick);
+          deal(pieces, insetFor(mode, thick));
+          applyStrip(banner, strip);
+          const score = collisions(pieces, strip);
+          if (score < best) {
+            best = score;
+            bestStyles = [banner, ...pieces, ...pieces.map((p) => p.firstElementChild!)].map(
+              (el) => [el, el.getAttribute("style") ?? ""] as [Element, string],
+            );
+          }
         }
+        if (best === 0) break;
       }
-      if (best === 0) break;
-    }
-    // The last try is not necessarily the best one: restore the winner.
-    if (best > 0) bestStyles.forEach(([el, style]) => el.setAttribute("style", style));
+      // The last try is not necessarily the best one: restore the winner.
+      if (best > 0) bestStyles.forEach(([el, style]) => el.setAttribute("style", style));
+    };
+
+    dealAll();
+
+    // The strip and the layouts are measured in pixels of this window: a new width
+    // (rotating a phone, switching device view) needs a new deal. Height alone is
+    // ignored, since mobile browser bars resize it while scrolling.
+    let width = innerWidth;
+    let timer: number | undefined;
+    const onResize = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        if (innerWidth === width) return;
+        width = innerWidth;
+        dealAll();
+      }, 150);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   return null;

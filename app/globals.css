@@ -97,10 +97,17 @@
 }
 
 .sticker:hover,
-.sticker:focus-within {
+.sticker:focus-within,
+.sticker[data-inked] {
   transform: rotate(0deg) translateY(-4px) scale(1.02);
   border-color: var(--secondary);
   box-shadow: 0 12px 40px rgba(255, 122, 26, 0.28);
+}
+
+/* Under the marker: the highlighter's yellow instead of the accent orange. */
+.sticker[data-inked] {
+  border-color: #fdff32;
+  box-shadow: 0 0 0 2px #fdff32, 0 12px 40px rgba(253, 255, 50, 0.35);
 }
 
 @keyframes marquee {

@@ -6,26 +6,42 @@ import { useEffect, useRef } from "react";
 // bitmap costs a quarter of the memory.
 const SCALE = 0.5;
 
+// A project card the marker is over lights up and opens on release.
+const PROJECT_LINK = ".sticker a[href]";
+
+// The ink is two canvases stacked over the content, one stroke drawn on both.
+// "difference" with white inverts what is under the stroke (dark page -> light,
+// white text -> black); "multiply" then tints the light parts neon yellow and
+// leaves the dark ones dark. Net effect: yellow marker, black text.
+const INK_LAYERS = [
+  { blend: "mix-blend-difference", color: "#ffffff" },
+  { blend: "mix-blend-multiply", color: "#fdff32" },
+] as const;
+
 // Highlighter: a chisel tip this long, leaning 45deg like a real marker.
 const MARKER = 30;
-const MARKER_YELLOW = "#fdff32"; // neon lime-yellow, like a Schneider Job pen
+const MARKER_YELLOW = INK_LAYERS[1].color; // neon lime-yellow, like a Schneider Job pen
 
 /**
  * A highlighter laid over the page. Holding the pointer draws neon-yellow ink
- * on a canvas above the content; "Clear highlights" wipes it.
+ * on a canvas above the content; "Clear highlights" wipes it. Inking over a
+ * project card lights it up, and lifting the pen there opens it.
  */
 export function Highlighter({ children }: { children: React.ReactNode }) {
   const stageRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
   const penRef = useRef<HTMLDivElement>(null);
   const clearInkRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     const stage = stageRef.current;
-    const canvas = canvasRef.current;
     const pen = penRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!stage || !canvas || !pen || !ctx) return;
+    const layers = INK_LAYERS.flatMap(({ color }, i) => {
+      const canvas = canvasRefs.current[i];
+      const ctx = canvas?.getContext("2d");
+      return canvas && ctx ? [{ canvas, ctx, color }] : [];
+    });
+    if (!stage || !pen || layers.length !== INK_LAYERS.length) return;
 
     let w = 0;
     let h = 0;
@@ -35,37 +51,52 @@ export function Highlighter({ children }: { children: React.ReactNode }) {
     let y = 0;
     let lastX = 0;
     let lastY = 0;
+    let hot: HTMLAnchorElement | null = null;
+
+    const projectAt = (px: number, py: number) =>
+      document.elementFromPoint(px, py)?.closest<HTMLAnchorElement>(PROJECT_LINK) ?? null;
+
+    const setHot = (link: HTMLAnchorElement | null) => {
+      if (link === hot) return;
+      hot?.closest(".sticker")?.removeAttribute("data-inked");
+      link?.closest(".sticker")?.setAttribute("data-inked", "");
+      hot = link;
+    };
 
     // Chisel tip swept from one point to the next: the hull of two tip segments.
     const highlight = (fromX: number, fromY: number, toX: number, toY: number) => {
       const dx = (Math.SQRT1_2 * MARKER) / 2;
       const dy = -dx;
-      ctx.fillStyle = MARKER_YELLOW;
-      ctx.strokeStyle = MARKER_YELLOW;
-      ctx.lineWidth = 3; // keeps a stroke along the tip's own direction from collapsing
-      ctx.lineJoin = "round";
-      ctx.beginPath();
-      ctx.moveTo(fromX + dx, fromY + dy);
-      ctx.lineTo(fromX - dx, fromY - dy);
-      ctx.lineTo(toX - dx, toY - dy);
-      ctx.lineTo(toX + dx, toY + dy);
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
+      for (const { ctx, color } of layers) {
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3; // keeps a stroke along the tip's own direction from collapsing
+        ctx.lineJoin = "round";
+        ctx.beginPath();
+        ctx.moveTo(fromX + dx, fromY + dy);
+        ctx.lineTo(fromX - dx, fromY - dy);
+        ctx.lineTo(toX - dx, toY - dy);
+        ctx.lineTo(toX + dx, toY + dy);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
     };
 
     const resize = () => {
-      const snapshot = document.createElement("canvas");
-      snapshot.width = canvas.width;
-      snapshot.height = canvas.height;
-      snapshot.getContext("2d")?.drawImage(canvas, 0, 0);
-
       w = window.innerWidth;
       h = window.innerHeight;
-      canvas.width = Math.round(w * SCALE);
-      canvas.height = Math.round(h * SCALE);
-      ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
-      ctx.drawImage(snapshot, 0, 0, w, h);
+      for (const { canvas, ctx } of layers) {
+        const snapshot = document.createElement("canvas");
+        snapshot.width = canvas.width;
+        snapshot.height = canvas.height;
+        snapshot.getContext("2d")?.drawImage(canvas, 0, 0);
+
+        canvas.width = Math.round(w * SCALE);
+        canvas.height = Math.round(h * SCALE);
+        ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
+        ctx.drawImage(snapshot, 0, 0, w, h);
+      }
     };
 
     const movePen = (e: PointerEvent) => {
@@ -93,6 +124,7 @@ export function Highlighter({ children }: { children: React.ReactNode }) {
       capture(e);
       movePen(e);
       highlight(x, y, x, y);
+      setHot(projectAt(x, y));
     };
 
     const onMove = (e: PointerEvent) => {
@@ -102,15 +134,25 @@ export function Highlighter({ children }: { children: React.ReactNode }) {
       x = e.clientX;
       y = e.clientY;
       highlight(lastX, lastY, x, y);
+      setHot(projectAt(x, y));
       lastX = x;
       lastY = y;
     };
 
-    const onUp = (e: PointerEvent) => {
+    const endStroke = (e: PointerEvent) => {
       down = false;
+      setHot(null);
       if (stage.hasPointerCapture(e.pointerId)) {
         stage.releasePointerCapture(e.pointerId);
       }
+    };
+
+    // Lifting the pen over a project opens it: a synthetic click has detail 0,
+    // so the stroke guard below lets it through.
+    const onUp = (e: PointerEvent) => {
+      const link = down && travelled > 6 ? hot : null;
+      endStroke(e);
+      link?.click();
     };
 
     // A press that travelled is a stroke, not a click: drawing over a card must not open it.
@@ -129,13 +171,13 @@ export function Highlighter({ children }: { children: React.ReactNode }) {
     };
 
     resize();
-    clearInkRef.current = () => ctx.clearRect(0, 0, w, h);
+    clearInkRef.current = () => layers.forEach(({ ctx }) => ctx.clearRect(0, 0, w, h));
 
     window.addEventListener("resize", resize);
     stage.addEventListener("pointerdown", onDown);
     stage.addEventListener("pointermove", onMove);
     stage.addEventListener("pointerup", onUp);
-    stage.addEventListener("pointercancel", onUp);
+    stage.addEventListener("pointercancel", endStroke);
     stage.addEventListener("pointerleave", onLeave);
     stage.addEventListener("click", onClickCapture, true);
     stage.addEventListener("dragstart", onDragStart);
@@ -145,7 +187,7 @@ export function Highlighter({ children }: { children: React.ReactNode }) {
       stage.removeEventListener("pointerdown", onDown);
       stage.removeEventListener("pointermove", onMove);
       stage.removeEventListener("pointerup", onUp);
-      stage.removeEventListener("pointercancel", onUp);
+      stage.removeEventListener("pointercancel", endStroke);
       stage.removeEventListener("pointerleave", onLeave);
       stage.removeEventListener("click", onClickCapture, true);
       stage.removeEventListener("dragstart", onDragStart);
@@ -159,11 +201,16 @@ export function Highlighter({ children }: { children: React.ReactNode }) {
     >
       {children}
 
-      <canvas
-        ref={canvasRef}
-        aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full opacity-60"
-      />
+      {INK_LAYERS.map(({ blend }, i) => (
+        <canvas
+          key={blend}
+          ref={(el) => {
+            canvasRefs.current[i] = el;
+          }}
+          aria-hidden
+          className={`pointer-events-none absolute inset-0 h-full w-full ${blend}`}
+        />
+      ))}
 
       <button
         type="button"
