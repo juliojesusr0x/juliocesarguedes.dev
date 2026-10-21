@@ -168,11 +168,30 @@ export function Highlighter({ children }: { children: React.ReactNode }) {
       <button
         type="button"
         data-no-ink
+        aria-label="Clear highlights"
+        title="Clear highlights"
         onClick={() => clearInkRef.current()}
         style={{ "--ink": MARKER_YELLOW } as React.CSSProperties}
-        className="absolute bottom-16 right-4 rounded-full border border-white/25 bg-black/80 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition-colors hover:border-[var(--ink)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ink)]"
+        className="absolute bottom-4 right-4 grid size-10 place-items-center rounded-full border border-[var(--ink)]/60 bg-black/80 text-[var(--ink)] backdrop-blur transition-colors hover:bg-[var(--ink)] hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ink)] sm:size-12"
       >
-        Clear highlights
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={22}
+          height={22}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M3 6h18" />
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+          <line x1="10" x2="10" y1="11" y2="17" />
+          <line x1="14" x2="14" y1="11" y2="17" />
+        </svg>
       </button>
 
       <div
